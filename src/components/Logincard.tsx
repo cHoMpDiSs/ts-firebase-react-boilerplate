@@ -14,7 +14,7 @@ const LoginCard: React.FC = () => {
     <div className="login-card">
       <h2>Login</h2>
       <form>
-        <div className="form-group">
+        <div className="form-group ">
           <label htmlFor="email">Email:</label>
           <input
             type="email"
