@@ -16,8 +16,6 @@ code {
   width: 50%;
 }
 
-
-
 .button-like-link {
   text-decoration: underline;
   color: #007bff; /* Set your desired link color */
@@ -28,4 +26,8 @@ code {
   cursor: pointer;
   outline: none;
   
+}
+
+.login-card{
+  margin-top: 6rem;
 }

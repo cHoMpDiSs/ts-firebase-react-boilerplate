@@ -1,44 +1,90 @@
 import React, { useState } from 'react';
 
-const LoginCard: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+interface LoginCardProps {
+  email: string;
+  setEmail: React.Dispatch<React.SetStateAction<string>>;
+  logInFail: boolean,
+  setLogInFail:React.Dispatch<React.SetStateAction<boolean>>,
+  password: string;
+  setPassword: React.Dispatch<React.SetStateAction<string>>;
+  firstName: string | null;
+  setFirstName: React.Dispatch<React.SetStateAction<string | null>>;
+  lastName: string;
+  setLastName: React.Dispatch<React.SetStateAction<string>>;
+  userSignIn: boolean;
+  setUserSignIn: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
+  finalAuthentication: boolean;
+  signUp: () => void;
+  signIn: (email: string, password: string) => void;
+  signInWithGoogle: () => void;
 
-  const handleLogin = () => {
-    // Add your authentication logic here
-    // You can use libraries like Firebase, Axios, etc., for authentication
-    // Example: firebase.auth().signInWithEmailAndPassword(email, password)
-  };
+}
+
+
+const LoginCard: React.FC<LoginCardProps> = (props) => {
+
+  const {
+    email,
+    setEmail,
+    password,
+    setPassword,
+    logInFail,
+    setFirstName,
+    setLastName,
+    userSignIn,
+    setUserSignIn,
+    finalAuthentication,
+    signInWithGoogle,
+    signIn,
+    signUp,
+
+
+  } = props;
+
+
 
   return (
-    <div className="login-card">
-      <h2>Login</h2>
-      <form>
-        <div className="form-group ">
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            placeholder="Enter your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            placeholder="Enter your password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <button type="button" onClick={handleLogin}>
-          Login
-        </button>
-      </form>
-    </div>
+    <div className="container justify-content-center d-flex align-items-center">
+            <div className="d-flex justify-content-center align-items-center login-card" >
+            {userSignIn === true ?
+            <div className="card p-4">
+              <p>Sign Up</p>
+              <input placeholder="First Name.." onChange={(e) => setFirstName(e.target.value)} />
+              <input placeholder="Last Name.." onChange={(e) => setLastName(e.target.value)} />
+              <input placeholder="Email.." onChange={(e) => setEmail(e.target.value)} />
+              <input type="password" placeholder="Password.." onChange={(e) => setPassword(e.target.value)} />
+              <button onClick={() => { signUp(); setUserSignIn(false); }}>Register</button>
+              <button onClick={signInWithGoogle}>Sign in with Google</button>
+              <p>already have an account?</p>
+              <button className="button-like-link" id="myLinkButton" onClick={(e) => setUserSignIn(false)}>sign in</button>
+ 
+              </div>
+            
+            : null}
+
+            <div className="text-center">
+              
+            </div>
+         
+              {userSignIn === false ?
+              <div className="card p-4">
+            
+              {finalAuthentication === false?
+              <div>
+                <p>Please sign in.</p>
+
+                {logInFail  === true ? <p>Incorrect credentials</p> : null}
+
+            <input placeholder="Email.." onChange={(e) => setEmail(e.target.value)} />
+            <input type="password" placeholder="Password.." onChange={(e) => setPassword(e.target.value)} />
+            
+            <button onClick={(e) => {signIn(email,password)}}>Sign in</button>
+          </div>
+                         :null }            </div>
+            : null}
+            </div>
+            </div>
   );
 };
 

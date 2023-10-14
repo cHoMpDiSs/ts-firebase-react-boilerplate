@@ -3,6 +3,9 @@ import { auth , googleProvider} from "./firebase";
 import { createUserWithEmailAndPassword,signInWithEmailAndPassword,signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import { useState } from "react";
 
+
+
+
 export const Auth: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [greeting, setGreeting] = useState<string>("Welcome please sign in");
@@ -11,6 +14,7 @@ export const Auth: React.FC = () => {
   const [lastName, setLastName] = useState<string>("")
   const [userSignIn, setUserSignIn] = useState<boolean>(true)
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
+  const [finalAuthentication, setFinalAuthentication] = useState<boolean>(false)
 
     console.log(auth?.currentUser?.email);
   
@@ -54,13 +58,15 @@ export const Auth: React.FC = () => {
       const fullName: string | null = auth.currentUser.displayName
       setFirstName(fullName)
       setGreeting("Welcome " + fullName)
+      setUserSignIn(false)
       setIsAuthenticated(true)
+      setFinalAuthentication(true)
     }
     } catch (err){
       console.error(err);
     }
   };
-  const logOut = async () => {
+   const logOut = async () => {
     try {
     await signOut(auth);
     console.log("sign out successful")
@@ -79,20 +85,19 @@ export const Auth: React.FC = () => {
           <div className="container">
             <div className="">
             <h1>{greeting}</h1>
-     
-         
-      
             </div>
-            {userSignIn == true ?
+            {userSignIn === true ?
             <div className="card">
               <p>Sign Up</p>
               <input placeholder="First Name.." onChange={(e) => setFirstName(e.target.value)} />
               <input placeholder="Last Name.." onChange={(e) => setLastName(e.target.value)} />
               <input placeholder="Email.." onChange={(e) => setEmail(e.target.value)} />
               <input type="password" placeholder="Password.." onChange={(e) => setPassword(e.target.value)} />
-              <button onClick={signUp}>Register</button>
+              <button onClick={() => { signUp(); setUserSignIn(false); }}>Register</button>
+
        
               <button onClick={signInWithGoogle}>Sign in with Google</button>
+              <p>already have an account?</p>
               <button className="button-like-link" id="myLinkButton" onClick={(e) => setUserSignIn(false)}>sign in</button>
               {isAuthenticated ?  <button onClick={logOut}>Log Out</button> : null}
               </div>
@@ -106,11 +111,14 @@ export const Auth: React.FC = () => {
               {userSignIn === false ?
               <div className="card">
             
-
+              {finalAuthentication === false?
+              <div>
             <input placeholder="Email.." onChange={(e) => setEmail(e.target.value)} />
             <input type="password" placeholder="Password.." onChange={(e) => setPassword(e.target.value)} />
-            <button onClick={(e) => {signIn(email,password)}}>Sign in</button>
+            
+            <button onClick={(e) => {signIn(email,password);setFinalAuthentication(true)}}>Sign in</button>
           </div>
+                         :null }            </div>
             : null}
             </div>
   
