@@ -1,12 +1,9 @@
-import { Link } from "react-router-dom";
-import { useState } from "react";
-
 
 
 interface NavBarProps{
     isAuthenticated: boolean;
     logOut: () => void;
-    greeting: string,
+    greeting: string | null,
     setWantsToSignIn:React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -18,8 +15,10 @@ const Navbar:React.FC<NavBarProps> = (props) => {
 
               <nav className="navbar navbar-expand-lg bg-body-tertiary">
               <div className="container-fluid">
-                <a className="navbar-brand" href="#">Daddies Comics</a>
-                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <a className="navbar-brand" href="#">Firebase React TypeScript</a>
+                <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
+                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                  aria-expanded="false" aria-label="Toggle navigation">
                   <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
@@ -41,10 +40,10 @@ const Navbar:React.FC<NavBarProps> = (props) => {
                         <li><a className="dropdown-item" href="#">Something else here</a></li>
                       </ul>
                     </li>
-                 
                   </ul>
-                  {greeting}
-                  {isAuthenticated ?  <button onClick={logOut}>Log Out</button> :  <button className="btn btn-outline-success" type="submit" onClick={() => setWantsToSignIn(true)}>log in</button>} 
+                     {greeting}<p> &nbsp;&nbsp;</p>  
+                  {isAuthenticated ?  <button className="btn btn-outline-primary " onClick={logOut}>log out</button> :
+                  <button className="btn btn-outline-primary "  type="submit" onClick={() => setWantsToSignIn(true)}>log in</button>} 
                    
                 </div>
               </div>
@@ -61,29 +60,7 @@ const Navbar:React.FC<NavBarProps> = (props) => {
 
 
 
-        // <div>
-        // <div className="collapse" id="navbarToggleExternalContent" data-bs-theme="dark">
-        //     <div className="bg-dark p-4">
-        //         <h5 className="text-body-emphasis h4">Collapsed content</h5>
-        //         <span className="text-body-secondary">Toggleable via the navbar brand.</span>
-        //     </div>
-        // </div>
-        //     <nav className="navbar navbar-dark bg-dark">
-        //     <div className="container-fluid">
-         
-        //         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-                    
-        //         <span className="navbar-toggler-icon"></span>
-
-
-        //         {isAuthenticated ?  <button onClick={logOut}>Log Out</button> : null}
-
-
-        //         </button>
-            
-        //     </div>
-        //     </nav>
-        // </div>
+  
     )
 }
 

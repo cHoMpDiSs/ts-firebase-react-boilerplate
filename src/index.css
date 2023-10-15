@@ -6,6 +6,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+p{
+  color: black;
+}
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
@@ -14,6 +17,16 @@ code {
 
 .login-card{
   width: 50%;
+  
+}
+
+.btn-txt{
+  height: 2.5rem;
+  margin-top: .25rem;
+}
+
+.with-shadow {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* You can adjust the shadow values as needed */
 }
 
 .button-like-link {
@@ -30,4 +43,16 @@ code {
 
 .login-card{
   margin-top: 6rem;
+}
+
+.greeting-txt {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+}
+
+
+.main{
+  height: 100rem;
+  background-color: rgb(255, 255, 255);
 }

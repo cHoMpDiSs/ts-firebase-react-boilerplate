@@ -17,8 +17,6 @@ interface MainProps {
     setUserSignIn: React.Dispatch<React.SetStateAction<boolean>>;
     isAuthenticated: boolean;
     setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
-    finalAuthentication: boolean;
-    setFinalAuthentication: React.Dispatch<React.SetStateAction<boolean>>;
     signUp: () => void;
     signIn: (email: string, password: string) => void;
     signInWithGoogle: () => void;
@@ -43,7 +41,7 @@ const Main: React.FC<MainProps> = (props) => {
     setLastName,
     userSignIn,
     setUserSignIn,
-    finalAuthentication,
+    isAuthenticated,
     setIsAuthenticated,
     wantsToSignIn,
     signInWithGoogle,
@@ -54,7 +52,7 @@ const Main: React.FC<MainProps> = (props) => {
   } = props;
 
     return (
-        <div>
+        <div className="main">
             {wantsToSignIn === true ? 
                 <LoginCard
                     email={email}
@@ -65,7 +63,6 @@ const Main: React.FC<MainProps> = (props) => {
                     setPassword={setPassword}
                     firstName={firstName}
                     signIn={signIn}
-             
                     signUp={signUp}
                     signInWithGoogle={signInWithGoogle}
                     setFirstName={setFirstName}
@@ -73,11 +70,10 @@ const Main: React.FC<MainProps> = (props) => {
                     setLastName={setLastName}
                     userSignIn={userSignIn}
                     setUserSignIn={setUserSignIn}
-          
                     setIsAuthenticated={setIsAuthenticated}
-                    finalAuthentication={finalAuthentication}
+                    isAuthenticated={isAuthenticated}
              
-            /> : <div> Main Page</div>
+            /> : <div className="main"> Main Page</div>
     }
                     </div>
     )

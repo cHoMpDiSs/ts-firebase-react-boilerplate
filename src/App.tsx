@@ -1,45 +1,27 @@
-import React from 'react';
+
 import { useState } from 'react';
 import { auth , googleProvider} from "./config/firebase"
 import { createUserWithEmailAndPassword,signInWithEmailAndPassword,signInWithPopup, signOut, updateProfile } from "firebase/auth";
-import { Auth}  from './config/auth';
 import Navbar from './components/Navbar';
-import LoginCard from './components/Logincard';
 import Main from './pages/Main';
 
 
 
 function App() {
-  const [email, setEmail] = useState<string>("");
-  const [greeting, setGreeting] = useState<string>("Welcome please sign in");
-  const [password, setPassword] = useState<string>("");
-  const [firstName, setFirstName] = useState<string| null>("please sign in")
-  const [lastName, setLastName] = useState<string>("")
-  const [userSignIn, setUserSignIn] = useState<boolean>(true)
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
-  const [finalAuthentication, setFinalAuthentication] = useState<boolean>(false)
-  const [wantsToSignIn, setWantsToSignIn] = useState<boolean>(false)
-  const [logInFail, setLogInFail] = useState<boolean>(false)
+  const [email, setEmail] = useState<string>(""); // sets email for auth or new account
+  const [greeting, setGreeting] = useState<string | null>(""); // changes greeting to user name on auth
+  const [password, setPassword] = useState<string>(""); // sets pw for auth or new account
+  const [firstName, setFirstName] = useState<string| null>("please sign in") //frst name state
+  const [lastName, setLastName] = useState<string>("") // last name state
+  const [userSignIn, setUserSignIn] = useState<boolean>(true) // email and password for log in sets to false with google auth
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false) // authenicates user state and changes UI 
+  const [wantsToSignIn, setWantsToSignIn] = useState<boolean>(false) // if user wants to sign in with email + password 
+  const [logInFail, setLogInFail] = useState<boolean>(false) // incorrect credentials 
 
 
     console.log(auth?.currentUser?.email);
   
-  const signIn = async (email: string,password:string) => {
-   try{
-    await signInWithEmailAndPassword(auth, email, password);
-    setIsAuthenticated(true)
-    if (auth.currentUser){
-      const fullName: string | null = auth.currentUser.displayName;
-      setFirstName(fullName)
-      setGreeting('Welcome ' + fullName)
-      setFinalAuthentication(true)
-      setWantsToSignIn(false)
-    }
-   } catch (err){
-    console.log(err)
-    setLogInFail(true)
-  }
-  }
+
 
   const signUp = async () => {
     try {
@@ -55,16 +37,32 @@ function App() {
     }
   };
   
+  const signIn = async (email: string,password:string) => {
+    try{
+     await signInWithEmailAndPassword(auth, email, password);
+     
+     if (auth.currentUser){
+       const fullName: string | null = auth.currentUser.displayName;
+       setFirstName(fullName)
+       setGreeting(fullName)
+       setIsAuthenticated(true)
+       setWantsToSignIn(false)
+     }
+    } catch (err){
+     console.log(err)
+     setLogInFail(true)
+   }
+   }
+
   const signInWithGoogle = async () => {
     try {
     await signInWithPopup(auth,googleProvider);
     if (auth.currentUser){
-      const fullName: string | null = auth.currentUser.displayName
+      const fullName: string | null = auth.currentUser.displayName 
       setFirstName(fullName)
-      setGreeting("Welcome " + fullName)
+      setGreeting(fullName)
       setUserSignIn(false)
       setIsAuthenticated(true)
-      setFinalAuthentication(true)
       setWantsToSignIn(false)
     }
     } catch (err){
@@ -75,8 +73,10 @@ function App() {
     try {
     await signOut(auth);
     console.log("sign out successful")
-    setGreeting("you have been logged out")
+    setGreeting("")
+    setUserSignIn(true)
     setIsAuthenticated(false)
+    setWantsToSignIn(false)
     } catch (err){
       console.error(err);
     }
@@ -111,15 +111,8 @@ function App() {
       setUserSignIn={setUserSignIn}
       isAuthenticated={isAuthenticated}
       setIsAuthenticated={setIsAuthenticated}
-      finalAuthentication={finalAuthentication}
-      setFinalAuthentication={setFinalAuthentication}
       wantsToSignIn={wantsToSignIn}
       setWantsToSignIn={setWantsToSignIn}
-      
-      
-      
-      
-      
       
       />
       
